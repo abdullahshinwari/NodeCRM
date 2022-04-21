@@ -1,10 +1,10 @@
-const leadsController = require('../controllers/employeeController');
+const employeeController = require('../controllers/employeeController');
 const express = require('express');
 const router = express.Router();
 
 router.get(
     '/employee-test',
-    leadsController.test
+    employeeController.test
 );
 
 module.exports = router;
