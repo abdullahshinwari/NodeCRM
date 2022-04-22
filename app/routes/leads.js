@@ -8,6 +8,16 @@ router.post(
 );
 
 router.get(
+    '/all-leads',
+    leadsController.allLeads
+);
+
+router.get(
+    '/show-lead/:id',
+    leadsController.showLead
+);
+
+router.get(
     '/test',
     leadsController.test
 );
