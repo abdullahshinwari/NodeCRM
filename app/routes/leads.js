@@ -17,6 +17,11 @@ router.get(
     leadsController.showLead
 );
 
+router.put(
+    '/update-lead/:id',
+    leadsController.updateLead
+);
+
 router.get(
     '/test',
     leadsController.test

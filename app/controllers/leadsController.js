@@ -60,6 +60,29 @@ const showLead = async(req, res) => {
     }
 }
 
+const updateLead = async(req, res) => {
+    try {
+        var lead = {
+            ...req.body,
+        }
+        // return lead;
+        let data = await Leads.findByIdAndUpdate(req.params.id, {$set:lead}, {new: true});
+        return res.send({
+            status: "SUCCESS",
+            message: "Update Lead By Id",
+            data: { data },
+            statusCode: 1000
+        })
+    } catch (error) {
+        console.log(error);
+        return res.send({
+            status: "ERROR",
+            message: "Something went wrong",
+            statusCode: 401
+        })
+    }
+}
+
 const test = async(req, res) => {
     return res.send({
         status: "SUCCESS",
@@ -72,5 +95,6 @@ module.exports = {
     addLead,
     allLeads,
     showLead,
+    updateLead,
     test,
 }
