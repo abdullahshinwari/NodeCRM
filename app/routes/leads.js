@@ -22,6 +22,11 @@ router.put(
     leadsController.updateLead
 );
 
+router.delete(
+    '/delete-lead/:id',
+    leadsController.deleteLead
+);
+
 router.get(
     '/test',
     leadsController.test

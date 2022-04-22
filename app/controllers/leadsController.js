@@ -17,7 +17,7 @@ const addLead = async(req, res) => {
         return res.send({
             status: "ERROR",
             message: "Something went wrong",
-            statusCode: 401
+            statusCode: 400
         })
     }
 }
@@ -36,7 +36,7 @@ const allLeads = async(req, res) => {
         return res.send({
             status: "ERROR",
             message: "Something went wrong",
-            statusCode: 401
+            statusCode: 400
         })
     }
 }
@@ -55,7 +55,7 @@ const showLead = async(req, res) => {
         return res.send({
             status: "ERROR",
             message: "Something went wrong",
-            statusCode: 401
+            statusCode: 400
         })
     }
 }
@@ -65,11 +65,10 @@ const updateLead = async(req, res) => {
         var lead = {
             ...req.body,
         }
-        // return lead;
         let data = await Leads.findByIdAndUpdate(req.params.id, {$set:lead}, {new: true});
         return res.send({
             status: "SUCCESS",
-            message: "Update Lead By Id",
+            message: "Lead Updated By Id",
             data: { data },
             statusCode: 1000
         })
@@ -78,7 +77,26 @@ const updateLead = async(req, res) => {
         return res.send({
             status: "ERROR",
             message: "Something went wrong",
-            statusCode: 401
+            statusCode: 400
+        })
+    }
+}
+
+const deleteLead = async(req, res) => {
+    try {
+        let data = await Leads.findByIdAndRemove(req.params.id);
+        return res.send({
+            status: "SUCCESS",
+            message: "Lead Deleted By Id",
+            data: { data },
+            statusCode: 1000
+        })
+    } catch (error) {
+        console.log(error);
+        return res.send({
+            status: "ERROR",
+            message: "Something went wrong",
+            statusCode: 400
         })
     }
 }
@@ -96,5 +114,6 @@ module.exports = {
     allLeads,
     showLead,
     updateLead,
+    deleteLead,
     test,
 }
