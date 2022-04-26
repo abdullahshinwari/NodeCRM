@@ -12,7 +12,10 @@ app.listen(3000, () => console.log('Server started at port : 3000'));
 // app.use('/employees', employeeController);
 let employee_routes = require('./app/routes/employee');
 let lead_routes = require('./app/routes/leads');
+let user_routes = require('./app/routes/user');
+
 app.use(employee_routes);
 app.use(lead_routes);
+app.use(user_routes);
 
 module.exports = app;
