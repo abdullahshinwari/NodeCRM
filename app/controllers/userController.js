@@ -5,15 +5,11 @@ const jwt = require('jsonwebtoken')
 
 const register = async(req, res) => {
     try {
-        bcrypt.hash(req.body.password, 10, function(err, hashedPass) {
-            if (err) {
-                res.json({
-                    error: err
-                })
-            }
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        let data = await User.create({
+            ...req.body,
+            password: hashedPassword 
         })
-
-
         return res.send({
             status: "SUCCESS",
             message: "User Registered Successfully !!!",
@@ -30,6 +26,39 @@ const register = async(req, res) => {
     }
 }
 
+const login = (req, res) => {
+    let username = req.body.username
+    let password =req.body.password
+    User.findOne({username:username})
+    .then(user =>{
+        if(user){
+            bcrypt.compare(password, user.password, function(err, result){
+                if (err){
+                    res.json({
+                        error: err
+                    })
+                }
+                if (result){
+                    let token = jwt.sign({name: user.name}, 'hiddenPowerKey', {expiresIn: '1h'})
+                    res.json({
+                        message: 'Logged In Successfully!',
+                        token
+                    })
+                }else{
+                    res.json({
+                        message: 'Password Does Not Match!'
+                    })
+                }
+            })
+        }else{
+            res.json({
+                message: 'No User Fount!'  
+            })
+        }
+    })
+}
+
 module.exports = {
-    register
+    register,
+    login
 }
