@@ -66,3 +66,15 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+const test = async(reqm, res) => {
+    return res.send({
+        status: "SUCCESS",
+        message: "Employee testing !!!",
+        statusCode: 1000
+    })
+}
+
+module.exports = {
+    test,
+}
